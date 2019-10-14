@@ -42,14 +42,14 @@ class Server {
     }
 
      configureBaseRoute() {
-        this.app.use(function (req, res, next) {
-            if (req.url === '/') {
-        //         return res.json(config.appConfig);
-            } else {
-                next();
-            }
-        });
-        this.app.use('/', this.router);
+        // this.app.use(function (req, res, next) {
+        //     if (req.url === '/') {
+        // //         return res.json(config.appConfig);
+        //     } else {
+        //         next();
+        //     }
+        // });
+        // this.app.use('/', this.router);
     }
 
      configureRoutes() {

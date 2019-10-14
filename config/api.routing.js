@@ -1,25 +1,31 @@
 'use strict';
-import express from 'express'
+import express from 'express';
+import {AppSetting} from '../config';
 import fs from 'fs';
-const versions = fs.readdirSync(`${__dirname}/../app/`).filter(dir => !dir.match(/(^\.)|index/i));
 const router = express.Router();
-if (process.env.NODE_ENV === 'development') {
-    console.log(`[Router Loaded]:`, routers);
-}
 class ApiRouting {
-
     static ConfigureRouters(app) {
-        console.log(`[Versions Loaded]:`, versions);
+        const versions = this.getVersions();
         for (let version of versions) {
-            console.log('Version is: ' + version)
-            const routes = fs.readdirSync(`${__dirname}/../app/${version}/routes`).filter(dir => !dir.match(/(^\.)|index/i));
+            const routes = this.getRoutesByVersion(version);
             for (let route of routes) {
-                console.log('Route is: ' + `${version}/cb/bs/`);
-                let path = `${__dirname}/../app/${version}/routes/${route}`
-                require(path)(app)
-                // app.use(`${version}/cb/bs/`, require(path)(router));
+               this.loadRoute(version, route);
             }
         }
+        app.use(AppSetting.getConfig().APP.BASE_PATH || '', router);
+    }
+
+    static getFile(path) {
+        return fs.readdirSync(path).filter(dir => !dir.match(/(^\.)|index/i));
+    }
+    static getVersions() {
+        return this.getFile(`${__dirname}/../app/`);
+    }
+    static getRoutesByVersion(version) {
+        return this.getFile(`${__dirname}/../app/${version}/routes`);
+    }
+    static loadRoute(version, route) {
+        require(`${__dirname}/../app/${version}/routes/${route}`)(router);
     }
 }
 export default ApiRouting;
