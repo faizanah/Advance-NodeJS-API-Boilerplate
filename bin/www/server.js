@@ -2,10 +2,9 @@ import express from 'express';
 import { json, urlencoded } from 'body-parser';
 import http from 'http';
 import helmet from 'helmet';
-import cors from 'cors';
 import compression from 'compression';
 import ApiRouting from '../../config/api.routing';
-import { Api } from '../../lib/api';
+import Api from '../../lib/api';
 import { Logger, AppSetting } from '../../config';
 
 class Server {
@@ -75,7 +74,7 @@ class Server {
 
         // // catch 404 and forward to error handler
         this.app.use( (req, res, next) => {
-            Api.notFound(req, res);
+            Api.notFound(req, res, { code: '9004', message: 'Invalid resource path' });
         });
     }
 
