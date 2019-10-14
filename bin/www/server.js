@@ -3,8 +3,9 @@ import { json, urlencoded } from 'body-parser';
 import http from 'http';
 import helmet from 'helmet';
 import compression from 'compression';
-import ApiRouting from '../../config/api.routing';
 import { HeaderMiddleware } from '../../lib/middlewares';
+import ApiRouting from '../../config/api.routing';
+import Api from '../../lib/api';
 import { Logger, AppSetting } from '../../config';
 class Server {
 
