@@ -1,9 +1,14 @@
 import * as dotenv from 'dotenv';
-dotenv.config({ debug: process.env.DEBUG })
-export default {
+const result = dotenv.config();
+if (result.error) {
+    throw result.error;
+}
+module.exports = {
     APP: {
+        NAME: 'Customer Service',
         ENV_CDT_PORT: process.env.ENV_CDT_PORT,
-        BASE_PATH: '/api/cb/bs/'
+        BASE_PATH: '/api/cb/bs/',
+        VERSION: '1.0'
     },
     DB: {
         ENV_CDT_CONNECTION: '',
