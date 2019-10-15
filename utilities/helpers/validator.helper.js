@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import Api from '../../lib/api';
-function validate(req, res, body, schemas, next) {
-    const { error } = Joi.validate(body, schemas, { abortEarly: false });
+function validate(req, res, body, schemas, next, options = { abortEarly: false, stripUnknown: true }) {
+    const { error } = Joi.validate(body, schemas, options);
     const valid = error == null;
     if (valid) {
         next();
