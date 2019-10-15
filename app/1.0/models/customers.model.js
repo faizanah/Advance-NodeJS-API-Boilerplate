@@ -6,10 +6,15 @@ const emailVerificationResponse = Joi.object().keys({
     customerID: Joi.string().min(4).max(5).required(),
     status: Joi.string().valid("Active", "Block", "Deceased").required(),
     createdOn: Joi.date().iso()
-}).unknown(true);
+})
 
-const createCustomerSchema = Joi.object({
-    a: Joi.boolean().required(),
+
+const createCustomerResponse = Joi.object().keys({
+    customerID: Joi.string().min(4).max(5).required(),
+    status: Joi.string().valid("Active", "Block", "Deceased").required()
+})
+
+const createCustomerRequest = Joi.object({
     customer: Joi.object()
         .keys({
             fullName: Joi.string().min(5).max(30).required(),
@@ -37,16 +42,12 @@ const createCustomerSchema = Joi.object({
 
 }).unknown(true);
 
-const CoreResponseMapper = Joi.object().keys({
-    whiteListed: Joi.boolean().required()
-}).unknown(true);
 
 module.exports = {
-    CheckCustNameSchema: CheckCustNameSchema,
     emailVerificationResponse: emailVerificationResponse,
     verifyEmail: verifyEmail,
-    createCustomerSchema: createCustomerSchema,
-    CoreResponseMapper: CoreResponseMapper
+    createCustomerResponse: createCustomerResponse,
+    createCustomerRequest: createCustomerRequest
 
 
 };
