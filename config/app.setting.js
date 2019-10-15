@@ -7,7 +7,7 @@ export class AppSetting {
     }
     static getConfig() {
         let env = ENV[this.NODE_ENV];
-        return env
+        return env;
     }
     // static getDBConnection() {
     //     return db;

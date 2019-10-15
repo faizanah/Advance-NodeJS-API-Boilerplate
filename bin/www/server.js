@@ -3,10 +3,10 @@ import { json, urlencoded } from 'body-parser';
 import http from 'http';
 import helmet from 'helmet';
 import compression from 'compression';
+import { HeaderMiddleware } from '../../lib/middlewares';
 import ApiRouting from '../../config/api.routing';
 import Api from '../../lib/api';
 import { Logger, AppSetting } from '../../config';
-
 class Server {
 
     constructor() {
@@ -29,15 +29,15 @@ class Server {
         this.app.use(urlencoded({ limit: '50mb', extended: true }));
         this.enableHelmet();
         Logger.configureLogger(this.app);
+        // this.app.use(HeaderMiddleware.AUTHORIZE())
     }
-
     enableHelmet(){
         this.app.use(helmet())
-        this.app.use(helmet.hidePoweredBy() ) ;
-        this.app.use( helmet.hsts( { maxAge: 7776000000 } ) ) ;
-        this.app.use( helmet.frameguard( 'SAMEORIGIN' ) ) ;
-        this.app.use( helmet.xssFilter( { setOnOldIE: true } ) ) ;
-        this.app.use( helmet.noSniff() ) 
+        this.app.use(helmet.hidePoweredBy());
+        this.app.use(helmet.hsts({ maxAge: 7776000000 }));
+        this.app.use(helmet.frameguard( 'SAMEORIGIN' ));
+        this.app.use(helmet.xssFilter({ setOnOldIE: true }));
+        this.app.use(helmet.noSniff());
     }
 
      configureBaseRoute() {
