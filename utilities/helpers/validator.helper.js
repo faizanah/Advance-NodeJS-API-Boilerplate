@@ -9,7 +9,7 @@ function validate(req, res, body, schemas, next){
         const { details } = error;
         const message = details.map(i => i.message);
         console.log(message);
-        Api.badRequest(req, res, message)
+        Api.badRequest(req, res, message);
     }
 }
 const ValidatorHelper = {
