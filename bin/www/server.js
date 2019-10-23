@@ -29,7 +29,7 @@ class Server {
         this.app.use(urlencoded({ limit: '50mb', extended: true }));
         this.enableHelmet();
         Logger.configureLogger(this.app);
-        this.app.use(HeaderMiddleware.AUTHORIZE())
+        // this.app.use(HeaderMiddleware.AUTHORIZE())
     }
     enableHelmet(){
         this.app.use(helmet())
