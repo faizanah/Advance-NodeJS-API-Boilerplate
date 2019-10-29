@@ -5,7 +5,8 @@
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node bin/index.js"
+    "dev": "nodemon --exec babel-node bin/index.js",
+    "start:prod": "babel-node bin/index.js"
   },
   "author": "AION Digital",
   "license": "ISC",
