@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+console.log(process.env.NODE_ENV)
 if(process.env.NODE_ENV === 'development'){
 	const result = dotenv.config();
 	if (result.error) {

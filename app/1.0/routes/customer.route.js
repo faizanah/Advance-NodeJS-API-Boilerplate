@@ -1,6 +1,4 @@
-import CustomerController from '../controllers/customers.controller';
-import CustomerValidator from '../validations/customer.validation';
-
+import customerController from '../controllers/customers.controller';
 module.exports = (router) => {
-    router.get('/customers/:email/1.0',[CustomerValidator.emailVerify()], CustomerController.getByEmailID);
-}
+	router.get('/customer/:email/1.0', customerController.getByEmailID);
+};
