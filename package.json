@@ -5,8 +5,8 @@
   "main": "bin/index.js",
   "scripts": {
     "start": "npm run start:prod",
-    "server": "babel-node ./bin/www/start.js",
-    "server:prod": "node ./dist/bin/www/start.js",
+    "server": "babel-node ./bin/start.js",
+    "server:prod": "node ./dist/bin/start.js",
     "start:dev": "NODE_ENV=development npm-run-all server",
     "clean": "rimraf dist",
     "build": "babel ./ --out-dir dist --ignore 'node_modules/**/*.js'",

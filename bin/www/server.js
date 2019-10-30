@@ -12,13 +12,13 @@ class Server {
 	constructor() {
 		this.app = express();
 		this.router = express.Router();
-		this.config = AppSetting.getConfig(); 
+		this.CONFIG = AppSetting.getConfig(); 
 		this.configure();
+		this.app.set('PORT', this.CONFIG.APP.ENV_CDT_PORT);
 	}
 
 	configure() {
 		this.configureMiddleware();
-		this.configureBaseRoute();
 		this.configureRoutes();
 		this.errorHandler();
 	}
@@ -38,17 +38,6 @@ class Server {
 		this.app.use(helmet.frameguard( 'SAMEORIGIN' ));
 		this.app.use(helmet.xssFilter({ setOnOldIE: true }));
 		this.app.use(helmet.noSniff());
-	}
-
-	configureBaseRoute() {
-		// this.app.use(function (req, res, next) {
-		//     if (req.url === '/') {
-		// //         return res.json(config.appConfig);
-		//     } else {
-		//         next();
-		//     }
-		// });
-		// this.app.use('/', this.router);
 	}
 
 	configureRoutes() {
@@ -81,12 +70,14 @@ class Server {
 
 	run() {
 		let server = http.createServer(this.app);
-		server.listen(this.config.APP.ENV_CDT_PORT || 3000);
+		server.listen(this.app.get('PORT'), () => {
+			console.log(`${AppSetting.getConfig().APP.NAME} - is listening on ${server.address().port}`);
+		});
 		server.on('error', this.onError);
 	}
 
 	onError(error) {
-		let port = this.config.APP.ENV_CDT_PORT;
+		let port = this.app.get('PORT');
 		if (error.syscall !== 'listen') {
 			throw error;
 		}
