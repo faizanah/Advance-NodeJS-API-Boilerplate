@@ -4,7 +4,7 @@ const CONFIG = AppSetting.getConfig();
 console.log(CONFIG);
 const db = knex({
 	client: CONFIG.DB.DIALECT,
-	connection: CONFIG.DB[CONFIG.DB.DIALECT],
+	connection: AppSetting.getDBConnection(),
 	debug: CONFIG.DB.ENV_CDT_DATABASE_DEBUG,
 	pool: {
 		min: 0,
