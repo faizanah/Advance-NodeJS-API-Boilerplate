@@ -1,5 +1,4 @@
 'use strict';
-import * as dotenv from 'dotenv';
 const fs = require('fs');
 const files = fs.readdirSync(`${__dirname}/`).filter(dir => !dir.match(/(^\.)|index/i));
 let CONFIG = {development: {}, production: {}};
