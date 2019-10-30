@@ -9,8 +9,5 @@ export class AppSetting {
         let env = ENV[this.NODE_ENV];
         return env;
     }
-    // static getDBConnection() {
-    //     return db;
-    // }
 }
 export default AppSetting;

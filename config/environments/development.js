@@ -1,3 +1,11 @@
+import * as dotenv from 'dotenv';
+if(process.env.NODE_ENV === 'development'){
+	const result = dotenv.config();
+	if (result.error) {
+		throw result.error;
+	}
+}
+
 module.exports = {
 	APP: {
 		NAME: 'Customer Service',
