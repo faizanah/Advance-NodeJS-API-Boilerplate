@@ -1,6 +1,7 @@
-const winston = require('winston'); // for transports.Console
-const path = require('path');
-const fs = require('fs');
+
+import winston from 'winston';
+import fs from 'fs';
+import path from 'path';
 const DailyRotateFile = require('winston-daily-rotate-file');
 
 class Logger {
@@ -70,7 +71,7 @@ class Logger {
 
     static warn(value) {
         if (this.logger) {
-            this._errorLogger.log('warn', this.GetValue(value));
+            this.logger.log('warn', this.GetValue(value));
         } else {
             console.log(this.GetValue(value));
         }
