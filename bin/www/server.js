@@ -7,6 +7,7 @@ import { HeaderMiddleware } from '../../lib/middleware';
 import ApiRouting from '../../config/api.routing';
 import Api from '../../lib/api';
 import { Logger, AppSetting } from '../../config';
+import db from '../../config/database';
 class Server {
 
 	constructor() {
@@ -31,7 +32,7 @@ class Server {
 		Logger.configureLogger(this.app);
 		this.app.use(HeaderMiddleware.AUTHORIZE());
 	}
-	enableHelmet(){
+	enableHelmet() {
 		this.app.use(helmet());
 		this.app.use(helmet.hidePoweredBy());
 		this.app.use(helmet.hsts({ maxAge: 7776000000 }));
