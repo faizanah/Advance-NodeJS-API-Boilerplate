@@ -1,7 +1,8 @@
 # ################################################################
-#  Copyright 2019-20
-# 
+# Docker file for wrapping nodejs service components
+# Copyright 2019-20 AionDigital 
 # ################################################################
+
 # Using latest LTS version running on alpine
 FROM node:12.13.0-alpine
 
