@@ -1,5 +1,4 @@
 import CDT_ENV from './environments/';
-import CONFIG from './environments/';
 
 export class AppSetting {
     static get NODE_ENV() {
@@ -25,21 +24,20 @@ export class AppSetting {
             default:
                 throw new Error('No DB connection found');
             }
-
     }
 
     static getMsSql() {
-        const CONFIG = this.getConfig();
-        return {
-			host: CONFIG.DB.HOST,
+		const CONFIG = this.getConfig();
+		return {
+			server: CONFIG.DB.HOST,
+			database: CONFIG.DB.DATABASE_NAME,
 			options: {
-				database: CONFIG.DB.DATABASE_NAME,
 				encrypt: true,
 				port: CONFIG.DB.PORT
 			},
 			password: CONFIG.DB.PASSWORD,
 			user: CONFIG.DB.USERNAME
-		}
+		};
     }
 
     static getOracle() {

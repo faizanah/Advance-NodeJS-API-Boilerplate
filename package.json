@@ -1,22 +1,45 @@
 {
   "name": "j2-middleware-starter-kit",
   "version": "1.0.0",
-  "description": "",
-  "main": "bin/index.js",
+  "description": "A boilerplate for Node.js conduit services",
+  "keywords": [
+    "node",
+    "es6",
+    "express",
+    "mssql",
+    "oracle",
+    "docker",
+    "microservice"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://faizanaion@bitbucket.org/aiondigitalteam/conduit.bp.api.git"
+  },
+  "author": {
+    "name": "Faizan Ahmad",
+    "email": "faizan@aiondigital.com"
+  },
+  "contributors": [
+    "Usman Rana <usman@aiondigital.com>"
+  ],
+  "main": "bin/start.js",
   "scripts": {
     "start": "npm run start:prod",
+    "build": "babel ./ --out-dir dist --ignore 'node_modules/**/*.js'",
     "server": "babel-node ./bin/start.js",
     "server:prod": "node ./dist/bin/start.js",
     "start:dev": "NODE_ENV=development npm-run-all server",
+    "start:prod": "NODE_ENV=production npm-run-all clean build server:prod",
+    "lint": "eslint \"**/*.js\"",
     "clean": "rimraf dist",
-    "build": "babel ./ --out-dir dist --ignore 'node_modules/**/*.js'",
-    "start:prod": "NODE_ENV=production npm-run-all clean build server:prod"
+    "precommit": "lint-staged",
+    "prettify": "tsfmt -r --baseDir ./"
   },
-  "author": "AION Digital",
-  "license": "ISC",
-  "engines": {
-    "node": "12.13.0",
-    "npm": "~6.12.0"
+  "lint-staged": {
+    "*": [
+      "prettify",
+      "git add"
+    ]
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
@@ -56,6 +79,13 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
-    "lint-staged": "^10.0.0-1"
-  }
+    "husky": "^3.0.9",
+    "lint-staged": "^10.0.0-1",
+    "prettier": "^1.18.2"
+  },
+  "engines": {
+    "node": "12.13.0",
+    "npm": "~6.12.0"
+  },
+  "license": "ISC"
 }

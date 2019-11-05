@@ -1,7 +1,7 @@
 module.exports = {
 	APP: {
-		NAME: 'COUNDUIT NodeJS Boilerplate',
-		ENV_CDT_PORT: process.env.ENV_CDT_PORT || process.env.PORT,
+		NAME: 'CONDUIT BOILERPLATE',
+		ENV_CDT_PORT: parseInt(process.env.ENV_CDT_PORT || process.env.PORT),
 		BASE_PATH: '/api/cb/bs/',
 		VERSION: '1.0',
 		SECRET: process.env.ENV_CDT_SECRET
