@@ -5,17 +5,18 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { HeaderMiddleware } from '../../lib/middleware';
 import ApiRouting from '../../config/api.routing';
+import ApiDoc from '../../config/api.doc';
 import Api from '../../lib/api';
 import { Logger, AppSetting } from '../../config';
-import db from '../../config/database';
 class Server {
 
 	constructor() {
 		this.app = express();
 		this.router = express.Router();
+		this.app.use(express.static('public'));
 		this.CONFIG = AppSetting.getConfig(); 
 		this.configure();
-		this.app.set('PORT', this.CONFIG.APP.ENV_CDT_PORT);
+		this.app.set('PORT', this.CONFIG.APP.PORT);
 	}
 
 	configure() {
@@ -29,6 +30,7 @@ class Server {
 		this.app.use(compression());
 		this.app.use(urlencoded({ limit: '50mb', extended: true }));
 		this.enableHelmet();
+		ApiDoc.publish(this.app);
 		Logger.configureLogger(this.app);
 		this.app.use(HeaderMiddleware.AUTHORIZE());
 	}
@@ -50,6 +52,7 @@ class Server {
 			}
 			next();
 		});
+
 		ApiRouting.ConfigureRouters(this.app);
 	}
 
@@ -70,15 +73,16 @@ class Server {
 
 
 	run() {
+		this.CONFIG = AppSetting.getConfig(); 
 		let server = http.createServer(this.app);
-		server.listen(this.app.get('PORT'), () => {
-			console.log(`${AppSetting.getConfig().APP.NAME} - is listening on ${server.address().port}`);
+		server.listen(this.CONFIG.APP.PORT, () => {
+			console.log(`${this.CONFIG.APP.NAME} - is listening on ${server.address().port}`);
 		});
 		server.on('error', this.onError);
 	}
 
 	onError(error) {
-		let port = this.app.get('PORT');
+		let port = AppSetting.getConfig().APP.PORT;
 		if (error.syscall !== 'listen') {
 			throw error;
 		}

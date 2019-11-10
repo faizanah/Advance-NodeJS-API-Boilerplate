@@ -12,14 +12,22 @@ LABEL maintainer="AionDigital"
 LABEL version="0.1.0 (alpha)"
 LABEL description="Container for running conduit service component"
 
+ARG PORT=3000
+
 # Setting environemnt variables
 # These variables will be different from application to application
-ENV ENV_CDT_PORT=4000 \
-    NODE_ENV=development \
-    ENV_CDT_ENTITY=customers
+ENV ENV_CDT_PORT=${PORT} \
+    NODE_ENV=production \
+    ENV_CDT_ENTITY=customers \
+    ENV_CDT_DB_HOST=alsalam.database.windows.net \
+    ENV_CDT_DB_USERNAME=Ad_Conduit \
+    ENV_CDT_DB_PASSWORD=Admin123456 \
+    ENV_CDT_DB_DIALECT=mssql \
+    ENV_CDT_DB_NAME=Ad_Conduit \
+    ENV_CDT_DB_PORT=1433
 
 # Expose port 4000 to the host     
-EXPOSE 4000
+EXPOSE ${PORT}
 
 # Working directory on which application binaries will be copied
 WORKDIR /conduit/
