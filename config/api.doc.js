@@ -11,10 +11,15 @@ class ApiDoc {
 
     getDefination() {
         return {
+            swagger: '2.0',
             info: {
               title: AppSetting.getConfig().APP.NAME,
               version: version,
               description: description,
+              'x-logo': {
+                url: 'https://www.aiondigital.com/wp-content/uploads/2018/07/Aion_white-1024x241.png',
+                altText:  AppSetting.getConfig().APP.NAME
+              },
               contact: {
                 name: 'AION SUPPORT',
                 url: 'https://www.aiondigital.com/support',
@@ -24,12 +29,7 @@ class ApiDoc {
               basePath: AppSetting.getConfig().APP.BASE_PATH
             },
             securityDefinitions: {
-              'APP_ID': {
-                type: 'apiKey',
-                in: 'header',
-                name: 'APP_ID'
-              },
-              'APP_SECRET': {
+              APP_SECRET: {
                 type: 'apiKey',
                 in: 'header',
                 name: 'APP_SECRET'
