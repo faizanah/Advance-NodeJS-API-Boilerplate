@@ -4,19 +4,14 @@ import http from 'http';
 import helmet from 'helmet';
 import compression from 'compression';
 import { HeaderMiddleware } from '../../lib/middleware';
-import ApiRouting from '../../config/api.routing';
-import ApiDoc from '../../config/api.doc';
 import Api from '../../lib/api';
-import { Logger, AppSetting } from '../../config';
+import { Logger, AppSetting, ApiRouting, ApiDoc } from '../../config';
 class Server {
 
 	constructor() {
 		this.app = express();
 		this.router = express.Router();
-		this.app.use(express.static('public'));
-		this.CONFIG = AppSetting.getConfig(); 
 		this.configure();
-		this.app.set('PORT', this.CONFIG.APP.PORT);
 	}
 
 	configure() {
@@ -29,8 +24,11 @@ class Server {
 		this.app.use(json({ limit: '50mb' }));
 		this.app.use(compression());
 		this.app.use(urlencoded({ limit: '50mb', extended: true }));
+		this.app.use(express.static('public'));
+		this.CONFIG = AppSetting.getConfig(); 
 		this.enableHelmet();
 		ApiDoc.publish(this.app);
+		this.app.set('PORT', this.CONFIG.APP.PORT);
 		Logger.configureLogger(this.app);
 		this.app.use(HeaderMiddleware.AUTHORIZE());
 	}
@@ -70,7 +68,6 @@ class Server {
 			Api.notFound(req, res, { code: '9004', message: 'Invalid resource path' });
 		});
 	}
-
 
 	run() {
 		this.CONFIG = AppSetting.getConfig(); 

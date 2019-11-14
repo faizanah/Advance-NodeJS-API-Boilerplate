@@ -1,8 +1,9 @@
-const { name, version, description } = require('../package.json');
-const swaggerJSDoc = require('swagger-jsdoc');
 import fs from 'fs';
 import  path from 'path';
+const swaggerJSDoc = require('swagger-jsdoc');
 import AppSetting from './app.setting';
+const packagePath = AppSetting.isProduction() ? '../../package.json' : '../package.json';
+const { version, description } = require(packagePath);
 
 class ApiDoc {
 
