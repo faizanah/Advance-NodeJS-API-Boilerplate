@@ -43,12 +43,12 @@ class ApiDoc {
     }
     publish(app) {
       const fileContent = this.fileContent();
-      const filePath = this.filePath('/public/api.docs.json');// path.resolve(__dirname, '../public/api.docs.json');
-      fs.writeFileSync(filePath, fileContent); 
-      const rootPage = this.filePath('public/index.html')
+      // const filePath = this.filePath('/public/api.docs.json');
+      fs.writeFileSync('public/api.docs.json', fileContent); 
       app.get('/docs',function(req,res) {
-        res.sendFile(rootPage);
+        res.sendFile('index.html');
       });
+      
     }
     filePath(file) {
       const _path = AppSetting.isProduction() ? '../..' : '..';
