@@ -1,0 +1,594 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Identity X - Development",
+    "version": "1.0.0",
+    "description": "A boilerplate for Node.js conduit services",
+    "x-logo": {
+      "url": "https://www.aiondigital.com/wp-content/uploads/2018/07/Aion_white-1024x241.png",
+      "altText": "Identity X - Development"
+    },
+    "contact": {
+      "name": "AION SUPPORT",
+      "url": "https://www.aiondigital.com/support",
+      "email": "faizan@aiondigital.com"
+    },
+    "host": "http://localhost:4003//api/fs/bs/identityx",
+    "basePath": "/api/fs/bs/identityx"
+  },
+  "securityDefinitions": {
+    "APP_SECRET": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "APP_SECRET"
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Creates a DAON user and upload the documents like 'passport' for that user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.DaonUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.UserCreate.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    },
+    "/registrationChallenge": {
+      "post": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Generate registration response for selfie/device",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "adosData should only be provided when creating response for selfie and not when doing it for device",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.GenerateRegResp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "update registration challenge for selfie/device",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "'type' in this object needs be sent as 'device' when updataing challenge for Device and can be empty in case of Selfie challenge",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.updateRegCh"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    },
+    "/createuser": {
+      "post": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Creates a DAON user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.UserId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    },
+    "/createIdCheckId": {
+      "post": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Creates idCheckID for Daon user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.CreateIdCheckId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    },
+    "/uploadDocs": {
+      "post": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Upload the documents like 'passport' for that user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identityx.uploadDocs"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    },
+    "/processingStatus/{daonId}/{idCheckID}": {
+      "get": {
+        "tags": [
+          "Identityx"
+        ],
+        "summary": "Check document processing status",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idCheckID",
+            "type": "string",
+            "description": "",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "daonId",
+            "description": "",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse"
+            }
+          },
+          "500": {
+            "description": "System can not process the request",
+            "schema": {
+              "$ref": "#/definitions/Identityx.ApiResponse500"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": false
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "The is the descriptive error message."
+              }
+            }
+          }
+        }
+      }
+    },
+    "Identityx.DaonUser": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identityx.Documents"
+          }
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "Identityx.CreateIdCheckId": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Identityx.Documents"
+          }
+        },
+        "daonId": {
+          "type": "string"
+        }
+      }
+    },
+    "Identityx.uploadDocs": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "$ref": "#/definitions/Identityx.Documents"
+        },
+        "daonId": {
+          "type": "string"
+        },
+        "idCheckID": {
+          "type": "string"
+        }
+      }
+    },
+    "Identityx.UserId": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "Identityx.Documents": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "Identityx.GenerateRegResp": {
+      "type": "object",
+      "properties": {
+        "fidoRegistrationRequest": {
+          "type": "string"
+        },
+        "adosData": {
+          "type": "string"
+        }
+      }
+    },
+    "Identityx.updateRegCh": {
+      "type": "object",
+      "properties": {
+        "fidoRegistrationRequestId": {
+          "type": "string"
+        },
+        "registrationResponse": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "this needs be sent as 'device' when updataing challenge for Device and can be empty in case of Selfie challenge"
+        }
+      }
+    },
+    "Identityx.UserCreate.ApiResponse": {
+      "type": "object",
+      "properties": {
+        "responseMetaData": {
+          "type": "object",
+          "properties": {
+            "transId": {
+              "type": "string"
+            },
+            "transParentId": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "responseTime": {
+              "type": "string"
+            },
+            "trace": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "desc": {
+                    "type": "string"
+                  },
+                  "traceDetails": {
+                    "type": "string"
+                  },
+                  "docRef": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "object",
+          "properties": {
+            "daonId": {
+              "type": "string"
+            },
+            "idCheckID": {
+              "type": "string"
+            },
+            "fidoRegistrationRequestId": {
+              "type": "string"
+            },
+            "fidoRegistrationRequest": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Identityx.ApiResponse500": {
+      "type": "object",
+      "properties": {
+        "responseMetaData": {
+          "type": "object",
+          "properties": {
+            "transId": {
+              "type": "string"
+            },
+            "transParentId": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "responseTime": {
+              "type": "string"
+            },
+            "trace": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "desc": {
+                    "type": "string"
+                  },
+                  "traceDetails": {
+                    "type": "string"
+                  },
+                  "docRef": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "object"
+        },
+        "exception": {
+          "type": "object"
+        }
+      }
+    },
+    "Identityx.ApiResponse": {
+      "type": "object",
+      "properties": {
+        "responseMetaData": {
+          "type": "object",
+          "properties": {
+            "transId": {
+              "type": "string"
+            },
+            "transParentId": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "responseTime": {
+              "type": "string"
+            },
+            "trace": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "desc": {
+                    "type": "string"
+                  },
+                  "traceDetails": {
+                    "type": "string"
+                  },
+                  "docRef": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "tags": []
+}
