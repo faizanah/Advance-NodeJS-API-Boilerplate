@@ -11,6 +11,10 @@
     "sourceType": "module",
     "ecmaVersion": 2018
   },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "rules": {
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
