@@ -1,48 +1,36 @@
 import Joi from 'joi';
-import Api from '../../lib/api';
-function validate(req, res, body, schemas, next, options = { abortEarly: false, stripUnknown: true }) {
-    const { error } = Joi.validate(body, schemas, options);
-    const valid = error == null;
-    if (valid) {
-        next();
-    } else {
-        const { details } = error;
-        const message = details.map(i => i.message);
-        console.log(message);
-        Api.badRequest(req, res, message);
-    }
-}
-const ValidatorHelper = {
+import AppError from '../../config/app.error';
 
-    params: (schemas) => {
-        return (req, res, next) => {
-            return validate(req, res, req.params, schemas, next);
-        }
-    },
-    headers: (schemas) => {
-        return (req, res, next) => {
-            return validate(req, res, req.headers, schemas, next);
-        }
-    },
-    body: (schemas) => {
-        return (req, res, next) => {
-            return validate(req, res, req.body, schemas, next);
-        }
-    },
-    query: (schemas) => {
-        return (req, res, next) => {
-            return validate(req, res, req.query, schemas, next);
-        }
-    },
-    validate: (data, schema) => {
-        const { error, value } = Joi.validate(data, schema, { abortEarly: false, stripUnknown: true });
-        if (!error) {
-            return value;
-        } else {
-            const { details } = error;
-            const message = details.map(i => i.message);
-            throw message;
-        }
-    }
+function validate(req, res, body, schemas, next, options = undefined) {
+  const extra = options || { abortEarly: false, stripUnknown: true };
+  const { error } = Joi.validate(body, schemas, extra);
+  const valid = error == null;
+  if (valid) {
+    next();
+  } else {
+    const { details } = error;
+    const message = details.map(err => {
+      err.path.push(err.type.split('.').pop());
+      const type = err.path
+        .join('_')
+        .toUpperCase()
+        .replace('-', '_');
+      return new AppError(type, err.message);
+    });
+    throw message;
+  }
 }
+
+const ValidatorHelper = {
+  params: schemas => (req, res, next) =>
+    validate(req, res, req.params, schemas, next),
+  headers: schemas => (req, res, next) =>
+    validate(req, res, req.headers, schemas, next),
+  body: schemas => (req, res, next) =>
+    validate(req, res, req.body, schemas, next),
+  query: schemas => (req, res, next) =>
+    validate(req, res, req.query, schemas, next),
+  validate: (body, schemas) => (req, res, next) =>
+    validate(req, res, body, schemas, next)
+};
 export default ValidatorHelper;
