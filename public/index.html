@@ -2,8 +2,11 @@
 <html>
   <head>
     <title>Api Documentation - Conduit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700"
+      rel="stylesheet"
+    />
     <style>
       body {
         margin: 0;
@@ -17,32 +20,37 @@
         z-index: 100;
       }
       #links_container {
-          margin: 0;
-          padding: 0;
-          background-color: #0033a0;
-          font-family: Roboto, sans-serif;
-          font-size: 1rem;
+        margin: 0;
+        padding: 0;
+        background-color: #0033a0;
+        font-family: Roboto, sans-serif;
+        font-size: 1rem;
       }
 
       #links_container li {
-          display: inline-block;
-          padding: 10px;
-          color: white;
-          cursor: pointer;
+        display: inline-block;
+        padding: 10px;
+        color: white;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-
     <!-- Top navigation placeholder -->
     <!-- <nav>
       <ul id="links_container">
       </ul>
     </nav> -->
 
-    <redoc menu-toggle="true" hide-download-button="true"  hide-hostname="true"  spec-url="api.docs.json" scroll-y-offset="body > nav"></redoc>
+    <redoc
+      menu-toggle="true"
+      hide-download-button="true"
+      hide-hostname="true"
+      spec-url="api.docs.json"
+      scroll-y-offset="body > nav"
+    ></redoc>
 
-    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
     <script>
       // list of APIS
       // var apis = [
@@ -76,7 +84,6 @@
       //   $listitem.addEventListener('click', onClick);
       //   $list.appendChild($listitem);
       // });
-   
     </script>
   </body>
 </html>
