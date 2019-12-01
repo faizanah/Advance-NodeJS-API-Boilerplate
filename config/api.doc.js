@@ -1,67 +1,57 @@
 import fs from 'fs';
-import  path from 'path';
-const swaggerJSDoc = require('swagger-jsdoc');
+import path from 'path';
+import SwaggerJSDoc from 'swagger-jsdoc';
 import AppSetting from './app.setting';
-const packagePath = AppSetting.isProduction() ? '../../package.json' : '../package.json';
-const { version, description } = require(packagePath);
 
-class ApiDoc {
+// let errors;
+// (async () => {
+//   errors = await import(path.join(process.cwd(), 'package.json'));
+// })();
 
-    constructor() {
-    }
+export default class ApiDoc {
+  static get definition() {
+    return {
+      openapi: '3.0.0',
+      info: ApiDoc.info,
+      schemes: ['http', 'https'],
+      consumes: ['application/json'],
+      produces: ['application/json'],
+      components: {}
+    };
+  }
 
-    getDefination() {
-        return {
-            swagger: '2.0',
-            info: {
-              title: AppSetting.getConfig().APP.NAME,
-              version: version,
-              description: description,
-              'x-logo': {
-                url: 'https://www.aiondigital.com/wp-content/uploads/2018/07/Aion_white-1024x241.png',
-                altText:  AppSetting.getConfig().APP.NAME
-              },
-              contact: {
-                name: 'AION SUPPORT',
-                url: 'https://www.aiondigital.com/support',
-                email: 'faizan@aiondigital.com'
-              },
-              host: '#',
-              basePath: AppSetting.getConfig().APP.BASE_PATH
-            },
-            securityDefinitions: {
-              APP_SECRET: {
-                type: 'apiKey',
-                in: 'header',
-                name: 'APP_SECRET'
-              }
-            },
-            schemes: ['http', 'https'],
-            consumes: ['application/json'],
-            produces: ['application/json']
-          };
-    }
-    publish(app) {
-      const fileContent = this.fileContent();
-      // const filePath = this.filePath('/public/api.docs.json');
-      fs.writeFileSync('public/api.docs.json', fileContent); 
-      app.get('/docs',function(req,res) {
-        res.sendFile('index.html');
-      });
-      
-    }
-    filePath(file) {
-      const _path = AppSetting.isProduction() ? '../..' : '..';
-      return path.resolve(__dirname,_path + file);
-    }
-    fileContent() {
-      const docsDefination = this.getDefination();
-      const content = swaggerJSDoc({
-        swaggerDefinition: docsDefination,
-          apis: ['./docs/**/*.yaml']
-      });
-      return JSON.stringify(content, null, 2);
-    }
+  static get info() {
+    return {
+      title: AppSetting.getConfig().APP.NAME,
+      // version: version,
+      // description: description,
+      'x-logo': {
+        url:
+          'https://www.aiondigital.com/wp-content/uploads/2018/07/Aion_white-1024x241.png',
+        altText: AppSetting.getConfig().APP.NAME
+      },
+      contact: {
+        name: 'AION SUPPORT',
+        url: 'https://www.aiondigital.com/support',
+        email: 'faizan@aiondigital.com'
+      },
+      host: `http://localhost:${AppSetting.getConfig().APP.PORT}`,
+      basePath: AppSetting.getConfig().APP.BASE_PATH
+    };
+  }
+
+  static publish(app) {
+    fs.writeFileSync('public/api.docs.json', ApiDoc.fileContent);
+    app.get('/docs', function(req, res) {
+      res.sendFile('index.html');
+    });
+  }
+
+  static get fileContent() {
+    const content = SwaggerJSDoc({
+      swaggerDefinition: ApiDoc.definition,
+      apis: ['./docs/**/*.yaml']
+    });
+    return JSON.stringify(content, null, 2);
+  }
 }
-
-export default new ApiDoc();
