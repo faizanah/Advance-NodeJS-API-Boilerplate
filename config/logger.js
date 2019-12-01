@@ -2,55 +2,33 @@ import winston from 'winston';
 import fs from 'fs';
 import path from 'path';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import AppSetting from './app.setting';
 
-class Logger {
+export default class Logger {
   constructor() {
-    this.logger = undefined;
+    this.log = undefined;
   }
 
   static get logDirectory() {
     return path.join(process.cwd(), 'logs');
   }
 
-  static CreateLogFolderIfNotExists() {
+  static createLogFolderIfNotExists() {
     // ensure log directory exists
     if (!fs.existsSync(this.logDirectory)) {
       fs.mkdirSync(this.logDirectory);
     }
   }
 
-  static logFormat() {
-    return winston.format.combine(
-      winston.format.label({ label: AppSetting.getConfig().APP.NAME }),
-      winston.format.colorize(),
-      winston.format.timestamp(),
-      winston.format.align(),
-      winston.format.printf(
-        msg =>
-          `${msg.timestamp} ${[msg.label]} - ${[msg.level]}: ${msg.message}`
-      )
-    );
-  }
-
   static setLogger() {
-    if (!this.logger) {
-      this.logger = winston.createLogger({
-        // format: this.logFormat(),
+    if (!this.log) {
+      this.log = winston.createLogger({
         transports: [
-          new winston.transports.Console({ level: 'debug' }),
           new DailyRotateFile({
             filename: path.join(Logger.logDirectory, '%DATE%.log'),
             datePattern: 'YYYY-MM-DD',
             prepend: true,
             localTime: true,
-            level: 'verbose',
-            handleExceptions: true,
-            json: false,
-            colorize: true,
-            zippedArchive: true,
-            maxSize: '20m',
-            maxFiles: '14d'
+            level: 'verbose'
           })
         ],
         exitOnError: false
@@ -59,11 +37,11 @@ class Logger {
   }
 
   static configureLogger() {
-    this.CreateLogFolderIfNotExists();
+    this.createLogFolderIfNotExists();
     this.setLogger();
   }
 
-  static GetValue(value) {
+  static getValue(value) {
     if (typeof value === 'string') {
       return value;
     }
@@ -71,35 +49,34 @@ class Logger {
   }
 
   static debug(value) {
-    if (this.logger) {
-      this.logger.log('debug', this.GetValue(value));
+    if (this.log) {
+      this.log.log('debug', this.getValue(value));
     } else {
-      //   console.log(this.GetValue(value));
+      // console.log(this.GetValue(value));
     }
   }
 
   static error(value) {
-    if (this.logger) {
-      this.logger.log('error', this.GetValue(value));
+    if (this.log) {
+      this.log.log('error', this.getValue(value));
     } else {
-      //   console.log(this.GetValue(value));
+      // console.log(this.GetValue(value));
     }
   }
 
   static warn(value) {
-    if (this.logger) {
-      this.logger.log('warn', this.GetValue(value));
+    if (this.log) {
+      this.log.log('warn', this.getValue(value));
     } else {
-      //   console.log(this.GetValue(value));
+      // console.log(this.GetValue(value));
     }
   }
 
   static info(value) {
-    if (this.logger) {
-      this.logger.log('info', this.GetValue(value));
+    if (this.log) {
+      this.log.log('info', this.getValue(value));
     } else {
-      //   console.log(this.GetValue(value));
+      // console.log(this.getValue(value));
     }
   }
 }
-export default Logger;
