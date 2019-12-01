@@ -1,11 +1,11 @@
 import fs from 'fs';
-import path from 'path';
+// import path from 'path';
 import SwaggerJSDoc from 'swagger-jsdoc';
 import AppSetting from './app.setting';
 
-// let errors;
+// let packageJson;
 // (async () => {
-//   errors = await import(path.join(process.cwd(), 'package.json'));
+//   packageJson = await import(path.join(process.cwd(), 'package.json'));
 // })();
 
 export default class ApiDoc {
@@ -23,8 +23,8 @@ export default class ApiDoc {
   static get info() {
     return {
       title: AppSetting.getConfig().APP.NAME,
-      // version: version,
-      // description: description,
+      // version: packageJson.version,
+      // description: packageJson.description,
       'x-logo': {
         url:
           'https://www.aiondigital.com/wp-content/uploads/2018/07/Aion_white-1024x241.png',
@@ -42,7 +42,7 @@ export default class ApiDoc {
 
   static publish(app) {
     fs.writeFileSync('public/api.docs.json', ApiDoc.fileContent);
-    app.get('/docs', function(req, res) {
+    app.get('/docs', (req, res) => {
       res.sendFile('index.html');
     });
   }
