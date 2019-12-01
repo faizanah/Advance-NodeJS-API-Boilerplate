@@ -2,6 +2,7 @@ import winston from 'winston';
 import fs from 'fs';
 import path from 'path';
 import DailyRotateFile from 'winston-daily-rotate-file';
+import AppSetting from './app.setting';
 
 export default class Logger {
   constructor() {
@@ -19,9 +20,23 @@ export default class Logger {
     }
   }
 
+  static get logFormat() {
+    return winston.format.combine(
+      winston.format.label({ label: AppSetting.getConfig().APP.NAME }),
+      winston.format.colorize(),
+      winston.format.timestamp(),
+      winston.format.align(),
+      winston.format.printf(
+        msg =>
+          `${msg.timestamp} ${[msg.label]} - ${[msg.level]}: ${msg.message}`
+      )
+    );
+  }
+
   static setLogger() {
     if (!this.log) {
       this.log = winston.createLogger({
+        format: this.logFormat,
         transports: [
           new DailyRotateFile({
             filename: path.join(Logger.logDirectory, '%DATE%.log'),
