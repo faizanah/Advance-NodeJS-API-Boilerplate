@@ -10,7 +10,7 @@ export default {
   APP: {
     NAME: 'CONDUIT BOILERPLATE - Development',
     PORT: parseInt(process.env.ENV_CDT_PORT || process.env.PORT, 10),
-    BASE_PATH: '/api/cb/bs/',
+    BASE_PATH: process.env.ENV_CDT_BASE_PATH,
     VERSION: '1.0',
     SECRET: process.env.ENV_CDT_SECRET
   },
